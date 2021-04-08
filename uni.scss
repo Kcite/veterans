@@ -1,0 +1,40 @@
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+@import 'uview-ui/theme.scss';
+
+
+
+/* 页面左右间距 */
+$page-row-spacing: 30upx;
+
+/* 文字尺寸 */
+$font-xs: 12upx;
+$font-sm: 24upx;
+$font-base: 28upx;
+$font-md: 30upx;
+$font-lg: 32upx;
+
+/*文字颜色*/
+$font-color-dark: #333;
+$font-color-base: #666;
+$font-color-light: #999;
+$font-color-disabled: #ccc;
+
+/*按钮颜色*/
+$btn-bg-color: #328FFF;
+
+$blue: #328FFF;
+$red: #db261d;
+$green: #46e21b;
+
+// 布局颜色
+$layout: #328FFF;
+
+
+/* 行为相关颜色 */
+$uni-color-primary:#fa436a;
+$uni-color-success: #4cd964;
+$uni-color-warning: #f0ad4e;
+$uni-color-error: #dd524d;

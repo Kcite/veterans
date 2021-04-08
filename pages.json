@@ -1,0 +1,231 @@
+{
+	"easycom": {
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/tab-bar/index",
+			"style": {
+				"navigationBarTitleText": "首页",
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/tab-bar/train",
+			"style": {
+				"navigationBarTitleText": "技能培训",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/tab-bar/getJob",
+			"style": {
+				"navigationBarTitleText": "企业招聘",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/tab-bar/my",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/login/register",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/template/mallMenu/index",
+			"style": {
+				"navigationBarTitleText": "分类"
+			}
+		}
+	],
+	"subPackages": [ // 分包机制，官方文档没有name说明，但是 preloadRule 提到 name，则代表可以用 name 配置别名
+		{
+			"root": "pages/home",
+			"name": "home",
+			"pages": [{
+				"path": "education",
+				"style": {
+					"navigationBarTitleText": "学历提升"
+				}
+			}, {
+				"path": "policies/index",
+				"style": {
+					"navigationBarTitleText": "政策法规"
+				}
+			}, {
+				"path": "policies/detail",
+				"style": {
+					"navigationBarTitleText": "政策法规"
+				}
+			}, {
+				"path": "jobWanted/index",
+				"style": {
+					"navigationBarTitleText": "求职信息"
+				}
+			}, {
+				"path": "jobWanted/detail",
+				"style": {
+					"navigationBarTitleText": "求职信息"
+				}
+			}, {
+				"path": "jobWanted/form",
+				"style": {
+					"navigationBarTitleText": "求职信息"
+				}
+			}, {
+				"path": "jobWanted/screen",
+				"style": {
+					"navigationBarTitleText": "条件筛选"
+				}
+			}]
+		}, {
+			"root": "pages/train",
+			"name": "train",
+			"pages": [{
+				"path": "course",
+				"style": {
+					"navigationBarTitleText": ""
+				}
+			}, {
+				"path": "school",
+				"style": {
+					"navigationBarTitleText": ""
+				}
+			}, {
+				"path": "from",
+				"style": {
+					"navigationBarTitleText": "报名"
+				}
+			}]
+		},
+		{
+			"root": "pages/getJob",
+			"name": "getJob",
+			"pages": [{
+				"path": "index",
+				"style": {
+					"navigationBarTitleText": "招聘详情"
+				}
+			}]
+		},
+		{
+			"root": "pages/my",
+			"name": "my",
+			"pages": [{
+					"path": "info",
+					"style": {
+						"navigationBarTitleText": "个人信息"
+					}
+				},{
+					"path": "avatarCropper",
+					"style": {
+						"navigationBarTitleText": "头像裁剪"
+					}
+				},
+				{
+					"path": "perfectInfo",
+					"style": {
+						"navigationBarTitleText": "信息完善"
+					}
+				},
+				{
+					"path": "enroll",
+					"style": {
+						"navigationBarTitleText": "我的培训"
+					}
+				},
+				{
+					"path": "setUp/index",
+					"style": {
+						"navigationBarTitleText": "设置"
+					}
+				}
+			]
+		},
+		{
+			"root": "pages/new",
+			"name": "new",
+			"pages": [{
+					"path": "index",
+					"style": {
+						"navigationBarTitleText": "政府新闻"
+					}
+				},
+				{
+					"path": "detail",
+					"style": {
+						"navigationBarTitleText": "政府新闻"
+					}
+				}
+			]
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uView",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+
+	"tabBar": {
+		"color": "#686E7A", // tab 上的文字默认颜色
+		"selectedColor": "#2B2F33", // tab 上的文字选中时的颜色
+		"borderStyle": "black", // tabbar 上边框的颜色，可选值 black/white
+		"backgroundColor": "#ffffff", // tab 的背景色
+		"list": [{
+				"pagePath": "pages/tab-bar/index",
+				"iconPath": "static/tab-bar/index.png",
+				"selectedIconPath": "static/tab-bar/index_H.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/tab-bar/train",
+				"iconPath": "static/tab-bar/peixun.png",
+				"selectedIconPath": "static/tab-bar/peixun_H.png",
+				"text": "培训"
+			},
+			{
+				"pagePath": "pages/tab-bar/getJob",
+				"iconPath": "static/tab-bar/jiuye.png",
+				"selectedIconPath": "static/tab-bar/jiuye_H.png",
+				"text": "就业"
+			},
+			{
+				"pagePath": "pages/tab-bar/my",
+				"iconPath": "static/tab-bar/my.png",
+				"selectedIconPath": "static/tab-bar/my_H.png",
+				"text": "我的"
+			}
+		]
+	},
+	"condition": { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [{
+			"name": "", //模式名称
+			"path": "", //启动页面，必选
+			"query": "" //启动参数，在页面的onLoad函数里面得到
+		}]
+	}
+}
