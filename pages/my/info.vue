@@ -37,7 +37,8 @@
 
 <script>
 	import {
-		updatePersonInfo
+		updatePersonInfo,
+		getPersonToken
 	} from '@/plugin/api'
 
 	import citySelect from './u-city-select.vue';
@@ -65,43 +66,46 @@
 
 				// u-radio-group的v-model绑定的值如果设置为某个radio的name，就会被默认选中
 				value: false,
-				sex: '',
 				adds: ''
 			}
 		},
 		computed: {},
-		onLoad() {
+		onLoad() {},
+		onShow() {let that = this;
 			let userInfo = uni.getStorageSync('userInfo');
 			this.userInfo = userInfo;
-		},
-		onShow() {
-
+			that.adds = that.userInfo.cSheng + '-' + that.userInfo.cShi + '-' + that.userInfo.cQuxian
+			console.log(userInfo);
 		},
 		methods: {
-
+			// 头像
 			avatarCropper() {
 				uni.navigateTo({
 					url: 'avatarCropper'
 				})
 			},
-
+			// 性别切换
 			radioChange(e) {
 				let that = this;
 				console.log(e);
 				that.userInfo.bSex = e;
 			},
-
+			// 现居地址
 			cityChange(e) {
 				let that = this;
 				console.log(e);
 				that.adds = e.province.label + '-' + e.city.label + '-' + e.area.label
+				that.userInfo.cSheng = e.province.label
+				that.userInfo.cShi = e.city.label
+				that.userInfo.cQuxian = e.area.label
+				that.userInfo.cXzqh = e.area.value
 			},
 
 			// 选中任一radio时，由radio-group触发
 			radioGroupChange(e) {
 				// console.log(e);
 			},
-
+			// 提交信息
 			submit() {
 				this.updatePersonInfo();
 			},
@@ -135,14 +139,17 @@
 					}
 				}
 
-				let token = uni.getStorageSync('TOKEN')
-				
+				let token = uni.getStorageSync('token')
+
 				const params = that.userInfo
 				params.token = token
 				params.bSex = params.bSex === "男" ? true : false
-				
+
 				updatePersonInfo(params).then(res => {
 					console.log(res);
+					if(res.data.code === 1){
+						
+					}
 				})
 			}
 		}

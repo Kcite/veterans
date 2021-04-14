@@ -47,15 +47,15 @@
 		methods: {
 //页面初始化
 			init(data) {
-				let {type, strID} = data
+				let {type, AutoID} = data
 				console.log(type);
-				this.getSchoolInfo(strID);
+				this.getSchoolInfo(AutoID);
 			},
 
-			getSchoolInfo(strID) {
+			getSchoolInfo(AutoID) {
 				let that = this;
 				getSchoolInfo({
-					strID: strID
+					AutoID: AutoID
 				}).then(({
 					data: {
 						code,

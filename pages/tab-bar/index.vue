@@ -157,6 +157,49 @@
 				uni.stopPullDownRefresh();
 			}, 1000);
 		},
+		// 分享功能
+		onShareAppMessage: function(options) {
+			console.log('【index】【onShareAppMessage】分享配置(options)：', options);
+		
+			let shareList = this.shareList;
+			// 设置菜单中的转发按钮触发转发事件时的转发内容
+			let shareObj = {
+				// 首页分享
+				title: shareList.remark, // 默认是小程序的名称(可以写slogan等)
+				path: shareList.ad_link + '?scene=' + this.userInfo.id, // 默认是当前页面，必须是以‘/’开头的完整路径
+				imageUrl: shareList.ad_code, //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
+				success: function(res) {
+					console.log(res);
+					// 转发成功之后的回调
+					if (res.errMsg == 'shareAppMessage:ok') {
+						console.log('【index】【onShareAppMessage】分享成功！');
+					}
+				},
+				fail: function() {
+					// 转发失败之后的回调
+					if (res.errMsg == 'shareAppMessage:fail cancel') {
+						// 用户取消转发
+						console.log('【index】【onShareAppMessage】用户取消转发');
+					} else if (res.errMsg == 'shareAppMessage:fail') {
+						// 转发失败，其中 detail message 为详细失败信息
+						console.log('【index】【onShareAppMessage】转发失败', res.detail, res.message);
+					}
+				}
+			};
+			// 来自页面内的按钮的转发
+			if (options.from == 'button') {
+				console.log('【index】【onShareAppMessage】推荐人(sponsor)：', this.userInfo.id);
+				// 此处可以修改 shareObj 中的内容
+				if (this.userInfo.id) {
+					shareObj.path = shareList.ad_link + '?scene=' + this.userInfo.id;
+				} else {
+					this.$api.msg('请登录后尝试！');
+					shareObj.path = '/pages/index/index';
+				}
+			}
+			// 返回shareObj
+			return shareObj;
+		},
 		methods: {
 
 			//页面初始化
@@ -196,7 +239,6 @@
 
 			// 轮播图点击事件
 			swiperClick(index) {
-
 				if (this.swiperList[index].cUrl) {
 					this.navTo(this.swiperList[index].cUrl)
 				}
@@ -261,34 +303,34 @@
 			},
 
 			/**
-			 * 统一跳转接口,拦截未登录路由
-			 * navigator标签现在默认没有转场动画，所以用view
+			 * 跳转
 			 */
 			navTo(url, data, type) {
 				console.log('【index】【navTo】Url：' + url);
-				if (url) {
-					if (data) {
-						uni.navigateTo({
-							url: url + `?data=${JSON.stringify(data)}`
-						})
-					} else {
-						if (type == 'tab') {
-							uni.switchTab({
-								url
-							})
-						} else {
-							// 保留当前页面，跳转到应用内的某个页面。但是不能跳到 tabbar 页面
-							uni.navigateTo({
-								url
-							})
-						}
-					}
-				} else {
-					this.$refs.uToast.show({
-						title: '暂无内容',
-						type: 'warning'
-					})
-				}
+				this.route.navTo(url, data, type);
+				// if (url) {
+				// 	if (data) {
+				// 		uni.navigateTo({
+				// 			url: url + `?data=${JSON.stringify(data)}`
+				// 		})
+				// 	} else {
+				// 		if (type == 'tab') {
+				// 			uni.switchTab({
+				// 				url
+				// 			})
+				// 		} else {
+				// 			// 保留当前页面，跳转到应用内的某个页面。但是不能跳到 tabbar 页面
+				// 			uni.navigateTo({
+				// 				url
+				// 			})
+				// 		}
+				// 	}
+				// } else {
+				// 	this.$refs.uToast.show({
+				// 		title: '暂无内容',
+				// 		type: 'warning'
+				// 	})
+				// }
 			}
 		}
 	}

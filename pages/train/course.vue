@@ -25,22 +25,22 @@
 			<button class="li-btn" type="default" @click="goFrom()">我要报名</button>
 		</view>
 		<u-toast ref="uToast" />
-		<u-modal v-model="show" :content="content" @confirm="navTo('/pages/tab-bar/my')"></u-modal>
+		<u-modal v-model="show" :content="content" @confirm="navTo('/pages/tab-bar/my','','tab')"></u-modal>
+		<u-modal v-model="loginShow" :content="content" @confirm="navTo('/pages/login/login')"></u-modal>
 	</view>
 </template>
 
 <script>
 	import {
 		getCourseInfo,
-		getCourseTypeInfo,
 		createEnrollData
 	} from '@/plugin/api'
 	export default {
 		data() {
 			return {
 				newData: {},
-				Course: {},
 				show: false,
+				loginShow: false,
 				content: '请先完善个人信息'
 			}
 		},
@@ -73,8 +73,6 @@
 					if (code === 1) {
 						console.log(data);
 						that.newData = data[0];
-
-						// that.getCourseTypeInfo(data[0].cCourseID);
 					} else if (msg) {
 						that.$refs.uToast.show({
 							title: msg,
@@ -85,36 +83,19 @@
 				})
 			},
 
-			getCourseTypeInfo(CourseID) {
-				let that = this;
-				getCourseTypeInfo({
-					strID: CourseID
-				}).then(({
-					data: {
-						code,
-						data,
-						msg
-					}
-				}) => {
-					if (code === 1) {
-						console.log(data);
-						that.Course = data[0];
-					} else if (msg) {
-						that.$refs.uToast.show({
-							title: msg,
-							position: 'top',
-							type: 'error'
-						})
-					}
-				})
-			},
-			
 			goFrom() {
 
 				let that = this;
-				let token = uni.getStorageSync('TOKEN')
+				let token = uni.getStorageSync('token')
 				let userInfo = uni.getStorageSync('userInfo')
-				if (userInfo.bCertification === "False") {
+				if (!token) {
+					that.content = '请先登录';
+					that.loginShow = true;
+					return;
+				}
+				console.log(!userInfo.bCertification || userInfo.bCertification === "False");
+				if (!userInfo.bCertification || userInfo.bCertification === "False") {
+					that.content = '请先完善个人信息';
 					that.show = true;
 					return;
 				}
@@ -156,19 +137,9 @@
 			 * 统一跳转接口,拦截未登录路由
 			 * navigator标签现在默认没有转场动画，所以用view
 			 */
-			navTo(url) {
-				console.log('【index】【navTo】Url：' + url);
-				if (url) {
-					// 保留当前页面，跳转到应用内的某个页面。但是不能跳到 tabbar 页面
-					uni.switchTab({
-						url: url
-					})
-				} else {
-					this.$refs.uToast.show({
-						title: '暂无内容',
-						type: 'warning'
-					})
-				}
+			navTo(url, data, type) {
+				console.log('【getJob】【navTo】Url：' + url);
+				this.route.navTo(url, data, type);
 			}
 		}
 	}

@@ -39,7 +39,9 @@
 			</view>
 			<!-- 注册 -->
 			<view class="li-form-btns">
-				<button class="cu-btn login-btn" style="color: #fff; display: flex; align-items: center; justify-content: center;" @tap="submit">注 册</button>
+				<button class="cu-btn login-btn"
+					style="color: #fff; display: flex; align-items: center; justify-content: center;" @tap="submit">注
+					册</button>
 			</view>
 		</view>
 		<!-- 验证码组件 -->
@@ -216,25 +218,26 @@
 							title: '正在跳转登录',
 							type: 'success'
 						})
+						let locaInfo = uni.getStorageSync('locaInfo');
 
 						let params = {
 							UserName: phone,
-							PassWord: pwd
+							PassWord: pwd,
+							IP: locaInfo
 						}
 
 						// 登录
 						getlogin(params).then(res => {
 							console.log(res);
+							console.log(res.data.code === 1);
 							if (res.data.code === 1) {
+								console.log(res.data.data[0].token);
 								uni.hideLoading()
-								uni.setStorageSync('token', res.data[0].token)
-								uni.setStorageSync('userInfo', res.data[0])
-								that.$refs.uToast.show({
-									title: '登录成功',
-									type: 'success'
-								})
+								console.log(res.data.data[0].token);
+								uni.setStorageSync('token', res.data.data[0].token)
+								console.log(res.data.data[0]);
+								uni.setStorageSync('userInfo', res.data.data[0])
 								setTimeout(() => {
-									uni.hideLoading();
 									uni.switchTab({
 										url: '/pages/tab-bar/index'
 									})
@@ -278,7 +281,7 @@
 
 <style lang="scss">
 	@import '../../style/login.scss';
-	
+
 	.login-btn {
 		margin-top: 70upx;
 		height: 96upx;

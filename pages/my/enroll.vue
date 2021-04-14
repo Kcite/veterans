@@ -13,7 +13,7 @@
 					</view>
 				</view>
 			</view>
-		</u-card>
+		</u-card> 
 	</view>
 </template>
 
@@ -40,7 +40,7 @@
 			//
 			getNewsList() {
 				let that = this;
-				let token = uni.getStorageSync('TOKEN')
+				let token = uni.getStorageSync('token')
 				getEnrollListByPerson({token}).then(({
 					data: {
 						code,

@@ -194,7 +194,7 @@
 					uni.hideLoading()
 					if (code === 1) {
 						uni.setStorage({
-							key: 'TOKEN',
+							key: 'token',
 							data: data[0].token
 						})
 
@@ -207,7 +207,7 @@
 							url: '/pages/tab-bar/index'
 						})
 						return;
-						this.$vuex('TOKEN', data[0].token, true).then(() => {
+						this.$vuex('token', data[0].token, true).then(() => {
 							this.$vuex('USER', data[0])
 							if (
 								!this.vuex_returnUrl ||

@@ -20,6 +20,7 @@ export const orderConfirm = data => http.get('/order/orderConfirm', data)
 
 
 //post方式
+
 // 用户注册
 export const registerPerson = data => http.post('/person.asmx/registerPerson', data, {
 	headers: {
@@ -34,48 +35,63 @@ export const VerifyPhone = data => http.post('/Person.asmx/VerifyPhone', data, {
 	}
 })
 
-// 修改头像和昵称
-export const updatePersonInfo = data => http.post('/Person.asmx/updatePersonInfo', data, {
-	headers: {
-		"content-type": "application/x-www-form-urlencoded",
-	}
-})
-
 // 用户登录
 export const getlogin = data => http.post('/Person.asmx/Login', data, {
 	headers: {
 		"content-type": "application/x-www-form-urlencoded",
 	}
 })
-// getSwiperList
+
+// 获取用户信息
+export const getPersonToken = data => http.post('/Person.asmx/getPersonToken', data, {
+	headers: {
+		"content-type": "application/x-www-form-urlencoded",
+	}
+})
+
+// 完善信息
+export const updatePersonInfo = data => http.post('/Person.asmx/updatePersonInfo', data, {
+	headers: {
+		"content-type": "application/x-www-form-urlencoded",
+	}
+})
+
+// 实名认证-更新退伍军人证件
+export const UpLoadTwjz = data => http.post('/Person.asmx/UpLoadTwjz', data, {
+	headers: {
+		"content-type": "application/x-www-form-urlencoded",
+	}
+})
+
+// getSwiperList | 获取banner
 export const getSwiperList = data => http.post('/ShowMain.asmx/GetMainBanner', data, {
 	headers: {
 		"content-type": "application/x-www-form-urlencoded",
 	}
 })
 
-// getNoticeBarList
+// getNoticeBarList | 获取滚动信息
 export const getNoticeBarList = data => http.post('/NoticeBar.asmx/getNoticeBarList', data, {
 	headers: {
 		"content-type": "application/x-www-form-urlencoded",
 	}
 })
 
-// getNewsListByTop
+// getNewsListByTop | 获取首页新闻
 export const getNewsListByTop = data => http.post('/News.asmx/getNewsListByTop', data, {
 	headers: {
 		"content-type": "application/x-www-form-urlencoded",
 	}
 })
 
-// getNewsList
+// getNewsList | 获取新闻列表
 export const getNewsList = data => http.post('/News.asmx/getNewsList', data, {
 	headers: {
 		"content-type": "application/x-www-form-urlencoded",
 	}
 })
 
-// getNewInfo
+// getNewInfo | 获取新闻详情
 export const getNewInfo = data => http.post('/News.asmx/getNewInfo', data, {
 	headers: {
 		"content-type": "application/x-www-form-urlencoded",

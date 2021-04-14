@@ -164,30 +164,8 @@
 			 * navigator标签现在默认没有转场动画，所以用view
 			 */
 			navTo(url, data, type) {
-				console.log('【index】【navTo】Url：' + url);
-				if (url) {
-					if (data) {
-						uni.navigateTo({
-							url: url + `?data=${JSON.stringify(data)}`
-						})
-					} else {
-						if (type == 'tab') {
-							uni.switchTab({
-								url
-							})
-						} else {
-							// 保留当前页面，跳转到应用内的某个页面。但是不能跳到 tabbar 页面
-							uni.navigateTo({
-								url
-							})
-						}
-					}
-				} else {
-					this.$refs.uToast.show({
-						title: '暂无内容',
-						type: 'warning'
-					})
-				}
+				console.log('【getJob】【navTo】Url：' + url);
+				this.route.navTo(url, data, type);
 			}
 		}
 	}

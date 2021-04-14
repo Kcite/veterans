@@ -43,19 +43,9 @@
 			 * 统一跳转接口,拦截未登录路由
 			 * navigator标签现在默认没有转场动画，所以用view
 			 */
-			navTo(url) {
-				console.log('【index】【navTo】Url：' + url);
-				if (url) {
-					// 保留当前页面，跳转到应用内的某个页面。但是不能跳到 tabbar 页面
-					uni.navigateTo({
-						url: url
-					})
-				} else {
-					this.$refs.uToast.show({
-						title: '暂无内容',
-						type: 'warning'
-					})
-				}
+			navTo(url, data, type) {
+				console.log('【getJob】【navTo】Url：' + url);
+				this.route.navTo(url, data, type);
 			}
 		}
 	}

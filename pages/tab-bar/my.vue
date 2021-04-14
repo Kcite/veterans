@@ -5,13 +5,16 @@
 			<view class="user">
 				<view class="head">
 					<u-avatar size='120' :src="src"></u-avatar>
-					<view class="info">
-						<text>姓名：{{userInfo.cUserName || '未填写'}}</text>
-						<text class="fs40">{{userInfo.cPhone}}</text>
+					<view v-if="userInfo.cUserName" class="info">
+						<text class="fs40">{{userInfo.cUserName || '未填写'}}</text>
+						<text class="fs32">{{userInfo.cPhone}}</text>
+					</view>
+					<view v-if="!userInfo.cUserName" class="info" @click="navTo('/pages/login/login')">
+						<text>点击登录账号</text>
 					</view>
 				</view>
 				<view v-if="!bCertification" class="tip" @click="navTo('/pages/my/perfectInfo')">
-					未实名认证
+					未完成认证
 					<u-icon name="arrow-right"></u-icon>
 				</view>
 			</view>
@@ -20,7 +23,7 @@
 		<view class="u-m-t-20">
 			<u-cell-group>
 				<u-cell-item icon="edit-pen" title="信息完善" @click="navTo('/pages/my/info')"></u-cell-item>
-				<u-cell-item icon="man-add" title="实名认证" @click="navTo('/pages/my/perfectInfo')"></u-cell-item>
+				<u-cell-item icon="man-add" title="退伍军人认证" @click="navTo('/pages/my/perfectInfo')"></u-cell-item>
 				<u-cell-item icon="shopping-cart" title="我的培训" @click="navTo('/pages/my/enroll')"></u-cell-item>
 			</u-cell-group>
 		</view>
@@ -97,7 +100,7 @@
 			this.userInfo = uni.getStorageSync('userInfo')
 		},
 		onShow() {
-
+			this.userInfo = uni.getStorageSync('userInfo')
 		},
 		methods: {
 
@@ -112,19 +115,9 @@
 			 * 统一跳转接口,拦截未登录路由
 			 * navigator标签现在默认没有转场动画，所以用view
 			 */
-			navTo(url) {
-				console.log('【index】【navTo】Url：' + url);
-				if (url) {
-					// 保留当前页面，跳转到应用内的某个页面。但是不能跳到 tabbar 页面
-					uni.navigateTo({
-						url: url
-					})
-				} else {
-					this.$refs.uToast.show({
-						title: '暂无内容',
-						type: 'warning'
-					})
-				}
+			navTo(url, data, type) {
+				console.log('【getJob】【navTo】Url：' + url);
+				this.route.navTo(url, data, type);
 			}
 		}
 	}

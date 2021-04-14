@@ -34,7 +34,6 @@
 		},
 		methods: {
 			chooseAvatar() {
-				console.log(22);
 				let that = this;
 				uni.navigateTo({
 					url: '/uview-ui/components/u-avatar-cropper/u-avatar-cropper'

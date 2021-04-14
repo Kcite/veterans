@@ -24,14 +24,14 @@
 		onShow() {},
 		methods: {
 			//页面初始化
-			init(strID) {
-				this.getNewInfo(strID);
+			init(AutoID) {
+				this.getNewInfo(AutoID);
 			},
 
-			getNewInfo(strID) {
+			getNewInfo(AutoID) {
 				let that = this;
 				getNewInfo({
-					strID: strID
+					AutoID: AutoID
 				}).then(({
 					data: {
 						code,
