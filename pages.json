@@ -3,13 +3,13 @@
 		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
 	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "",
-				"navigationStyle": "custom"
-			}
-		},
+		// {
+		// 	"path": "pages/index/index",
+		// 	"style": {
+		// 		"navigationBarTitleText": "",
+		// 		"navigationStyle": "custom"
+		// 	}
+		// },
 		{
 			"path": "pages/tab-bar/index",
 			"style": {
@@ -98,6 +98,16 @@
 				"path": "jobWanted/screen",
 				"style": {
 					"navigationBarTitleText": "条件筛选"
+				}
+			}, {
+				"path": "recruitInfo/index",
+				"style": {
+					"navigationBarTitleText": "就业资讯"
+				}
+			}, {
+				"path": "recruitInfo/detail",
+				"style": {
+					"navigationBarTitleText": "就业资讯"
 				}
 			}]
 		}, {

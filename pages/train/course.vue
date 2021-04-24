@@ -100,7 +100,6 @@
 					return;
 				}
 
-				console.log();
 				createEnrollData({
 					token: token,
 					cCourseBySchoolID: that.newData.AutoID,

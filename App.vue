@@ -71,6 +71,14 @@
 	.fs30 {
 		font-size: 30upx;
 	}
+	
+	.fs32 {
+		font-size: 32upx;
+	}
+
+	.fs36 {
+		font-size: 36upx;
+	}
 
 	.fs40 {
 		font-size: 40upx;
@@ -96,8 +104,16 @@
 		padding: 30upx;
 	}
 
+	.pl10 {
+		padding-left: 10upx;
+	}
+
 	.pl15 {
 		padding-left: 15upx;
+	}
+
+	.pl20 {
+		padding-left: 20upx;
 	}
 
 	.pt10 {

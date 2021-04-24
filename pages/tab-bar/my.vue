@@ -13,7 +13,7 @@
 						<text>点击登录账号</text>
 					</view>
 				</view>
-				<view v-if="!bCertification" class="tip" @click="navTo('/pages/my/perfectInfo')">
+				<view v-if="userInfo.bCertification !== 'True'" class="tip" @click="navTo('/pages/my/perfectInfo')">
 					未完成认证
 					<u-icon name="arrow-right"></u-icon>
 				</view>
@@ -23,43 +23,43 @@
 		<view class="u-m-t-20">
 			<u-cell-group>
 				<u-cell-item icon="edit-pen" title="信息完善" @click="navTo('/pages/my/info')"></u-cell-item>
-				<u-cell-item icon="man-add" title="退伍军人认证" @click="navTo('/pages/my/perfectInfo')"></u-cell-item>
+				<u-cell-item v-if="userInfo.bCertification !== 'True'" icon="man-add" title="退伍军人认证" @click="navTo('/pages/my/perfectInfo')"></u-cell-item>
 				<u-cell-item icon="shopping-cart" title="我的培训" @click="navTo('/pages/my/enroll')"></u-cell-item>
 			</u-cell-group>
 		</view>
 		<u-gap height="20" bg-color="#f5f5f5"></u-gap>
 		<view class="">
-			<u-grid :col="4" :border="false" align="center">
-				<u-grid-item>
-					<u-icon name="/static/my/扫码.png" width="50" height="50" :size="46"></u-icon>
+			<u-grid :col="4" :border="0">
+				<u-grid-item @click="navTo('')">
+					<u-icon name="/static/my/m1.png" width="50" height="50" :size="46"></u-icon>
 					<view class="grid-text">邀请码</view>
 				</u-grid-item>
-				<u-grid-item>
-					<u-icon name="/static/my/签到.png" width="50" height="50" :size="46"></u-icon>
+				<u-grid-item @click="navTo('')">
+					<u-icon name="/static/my/m2.png" width="50" height="50" :size="46"></u-icon>
 					<view class="grid-text">签到</view>
 				</u-grid-item>
-				<u-grid-item>
-					<u-icon name="/static/my/分销.png" width="50" height="50" :size="46"></u-icon>
+				<u-grid-item @click="navTo('')">
+					<u-icon name="/static/my/m3.png" width="50" height="50" :size="46"></u-icon>
 					<view class="grid-text">分销</view>
 				</u-grid-item>
-				<u-grid-item>
-					<u-icon name="/static/my/招聘.png" width="50" height="50" :size="46"></u-icon>
+				<u-grid-item @click="navTo('')">
+					<u-icon name="/static/my/m4.png" width="50" height="50" :size="46"></u-icon>
 					<view class="grid-text">招聘</view>
 				</u-grid-item>
-				<u-grid-item>
-					<u-icon name="/static/my/求职.png" width="50" height="50" :size="46"></u-icon>
+				<u-grid-item @click="navTo('')">
+					<u-icon name="/static/my/m5.png" width="50" height="50" :size="46"></u-icon>
 					<view class="grid-text">求职</view>
 				</u-grid-item>
-				<u-grid-item>
-					<u-icon name="/static/my/直播.png" width="50" height="50" :size="46"></u-icon>
+				<u-grid-item @click="navTo('')">
+					<u-icon name="/static/my/m6.png" width="50" height="50" :size="46"></u-icon>
 					<view class="grid-text">直播</view>
 				</u-grid-item>
-				<u-grid-item>
-					<u-icon name="/static/my/商城.png" width="50" height="50" :size="46"></u-icon>
+				<u-grid-item @click="navTo('')">
+					<u-icon name="/static/my/m7.png" width="50" height="50" :size="46"></u-icon>
 					<view class="grid-text">商城</view>
 				</u-grid-item>
-				<u-grid-item>
-					<u-icon name="/static/my/支付.png" width="50" height="50" :size="46"></u-icon>
+				<u-grid-item @click="navTo('')">
+					<u-icon name="/static/my/m8.png" width="50" height="50" :size="46"></u-icon>
 					<view class="grid-text">支付</view>
 				</u-grid-item>
 				<u-grid-item @click="makePhoneCall">
@@ -72,7 +72,7 @@
 				</u-grid-item>
 			</u-grid>
 		</view>
-
+		<u-toast ref="uToast"></u-toast>
 		<!-- <view class="u-m-t-20">
 			<u-cell-group>
 				<u-cell-item icon="phone" title="客服电话" @click="makePhoneCall"></u-cell-item>
@@ -112,12 +112,18 @@
 			},
 
 			/**
-			 * 统一跳转接口,拦截未登录路由
-			 * navigator标签现在默认没有转场动画，所以用view
+			 * 跳转
 			 */
 			navTo(url, data, type) {
-				console.log('【getJob】【navTo】Url：' + url);
-				this.route.navTo(url, data, type);
+				console.log('【index】【navTo】Url：' + url);
+				if (url) {
+					this.route.navTo(url, data, type);
+				} else {
+					this.$refs.uToast.show({
+						title: '暂无内容',
+						type: 'warning'
+					})
+				}
 			}
 		}
 	}

@@ -16,7 +16,7 @@
 						type="number"></u-input>
 				</u-form-item>
 				<!-- 验证码 -->
-				<u-form-item :leftIconStyle="{color: '#888', fontSize: '34rpx', width:'34rpx', height:'34rpx'}"
+				<u-form-item v-if="false" :leftIconStyle="{color: '#888', fontSize: '34rpx', width:'34rpx', height:'34rpx'}"
 					left-icon="/static/login/key.png" prop="code" label-width="150">
 					<u-input placeholder="请输入验证码" placeholderStyle="placeclass" maxlength="4" v-model="form.code"
 						type="text"></u-input>

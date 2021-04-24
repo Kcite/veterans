@@ -8,7 +8,7 @@
 			<view class="login-list flex border-all">
 				<view class="iconfont icon-shoujihao flex"></view>
 				<view class="login-input">
-					<input type="number" maxlength="11" placeholder="请输入退伍证号/身份证号/手机号" class="is-input1 "
+					<input type="number" maxlength="11" placeholder="请输入手机号" class="is-input1 "
 						v-model="mobilePhone" />
 				</view>
 			</view>
@@ -77,7 +77,7 @@
 		},
 		onLoad() {
 			console.log('onLoad');
-			this.isLoading()
+			// this.isLoading()
 		},
 		methods: {
 			doTwo() {

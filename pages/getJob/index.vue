@@ -60,9 +60,13 @@
 </template>
 
 <script>
+	import {
+		getRecruitInfo
+	} from '@/plugin/api'
 	export default {
 		data() {
 			return {
+				AutoID: '',
 				data: {
 					imgUrl: '/static/missing-face.png', // imgUrl
 					userName: '李先生', // 用户名
@@ -91,12 +95,46 @@
 		},
 		onLoad(options) {
 			console.log(options);
-			this.data = JSON.parse(options.data) || this.data;
+			this.AutoID = JSON.parse(options.data) || this.data;
+			let that = this;
+			that.init(this.AutoID);
 		},
 		onShow() {
-
+			
 		},
 		methods: {
+			
+			//页面初始化
+			init(AutoID) {
+				this.getRecruitInfo(AutoID);
+			},
+			
+			// 加载课程
+			getRecruitInfo(strXzqhDm) {
+				let that = this;
+				getRecruitInfo({
+					AutoID
+				}).then(({
+					data: {
+						code,
+						data,
+						msg
+					}
+				}) => {
+					if (code === 1) {
+						console.log(data);
+						that.skillTrainingList = data;
+					} else if (msg) {
+						that.$refs.uToast.show({
+							title: msg,
+							position: 'top',
+							type: 'error'
+						})
+					}
+					uni.hideNavigationBarLoading()
+					uni.stopPullDownRefresh()
+				})
+			},
 			
 			tap(){
 				console.log(111);

@@ -2,16 +2,15 @@ const Fly = require("../utils/wx.js")
 const instance = new Fly()
 
 // https://www.yunxi360.com/wap_api/index/ad
-// const host = 'https://chedui.api.tuanyech.com/'
-const host = process.env.NODE_ENV === 'production' ? 'https://shangcheng.api.tuanyech.com' :
+// const host = 'http://sjws-et.com/'
+const host = process.env.NODE_ENV === 'production' ? 'http://82.156.230.120' :
 	'http://82.156.230.120';
 instance.interceptors.request.use((req) => {
 	const token = uni.getStorageSync('token')
 
 	if (token) {
-			// req.params.token = token
+		// req.params.token = token
 	}
-
 	return req
 })
 

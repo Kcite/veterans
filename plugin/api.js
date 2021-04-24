@@ -98,6 +98,28 @@ export const getNewInfo = data => http.post('/News.asmx/getNewInfo', data, {
 	}
 })
 
+
+// getRecruitInfoListByTop | 获取首页就业资讯
+export const getRecruitInfoListByTop = data => http.post('/RecruitInfo.asmx/getRecruitInfoListByTop', data, {
+	headers: {
+		"content-type": "application/x-www-form-urlencoded",
+	}
+})
+
+// getRecruitInfoList | 获取就业资讯列表
+export const getRecruitInfoList = data => http.post('/RecruitInfo.asmx/getRecruitInfoList', data, {
+	headers: {
+		"content-type": "application/x-www-form-urlencoded",
+	}
+})
+
+// getRecruitInfo | 获取就业资讯详情
+export const getRecruitInfo = data => http.post('/RecruitInfo.asmx/getRecruitInfo', data, {
+	headers: {
+		"content-type": "application/x-www-form-urlencoded",
+	}
+})
+
 // getCourseList | 获取课程列表
 export const getCourseList = data => http.post('/Course.asmx/GetCourseBySchool_List', data, {
 	headers: {

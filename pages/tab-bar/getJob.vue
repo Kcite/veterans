@@ -14,23 +14,29 @@
 							<view class="li-tags">
 								<text class="fs28">学历要求</text>
 								<view class="li-tag-item">
-									<view class="li-tag-cell" v-for="(item, index) in options3[0].qualifcations" :key="index">
-										<u-tag :type="item.value == value3.qualifcations ? 'primary' : 'info'" :text="item.label" :index="item.value"
-										 mode="plain" @click="tagValue1(item.value)" />
+									<view class="li-tag-cell" v-for="(item, index) in options3[0].qualifcations"
+										:key="index">
+										<u-tag :type="item.value == value3.qualifcations ? 'primary' : 'info'"
+											:text="item.label" :index="item.value" mode="plain"
+											@click="tagValue1(item.value)" />
 									</view>
 								</view>
 								<text class="fs28">工作经验</text>
 								<view class="li-tag-item">
-									<view class="li-tag-cell" v-for="(item, index) in options3[1].workingYears" :key="index">
-										<u-tag :type="item.value == value3.workingYears ? 'primary' : 'info'" :text="item.label" :index="item.value"
-										 mode="plain" @click="tagValue2(item.value)" />
+									<view class="li-tag-cell" v-for="(item, index) in options3[1].workingYears"
+										:key="index">
+										<u-tag :type="item.value == value3.workingYears ? 'primary' : 'info'"
+											:text="item.label" :index="item.value" mode="plain"
+											@click="tagValue2(item.value)" />
 									</view>
 								</view>
 								<text class="fs28">公司性质</text>
 								<view class="li-tag-item">
-									<view class="li-tag-cell" v-for="(item, index) in options3[2].wayOfWorking" :key="index">
-										<u-tag :type="item.value == value3.wayOfWorking ? 'primary' : 'info'" :text="item.label" :index="item.value"
-										 mode="plain" @click="tagValue3(item.value)" />
+									<view class="li-tag-cell" v-for="(item, index) in options3[2].wayOfWorking"
+										:key="index">
+										<u-tag :type="item.value == value3.wayOfWorking ? 'primary' : 'info'"
+											:text="item.label" :index="item.value" mode="plain"
+											@click="tagValue3(item.value)" />
 									</view>
 								</view>
 							</view>
@@ -41,30 +47,36 @@
 		</u-sticky>
 
 		<view class="li-list pb30">
-			<view v-for="(item, index) in listData" @click="navTo('/pages/getJob/index',item)" :key="index" class="li-list-item">
+			<view v-for="(item, index) in recruitInfoList" @click="navTo('/pages/getJob/index',item.AutoID)" :key="index"
+				class="li-list-item">
 				<view class="head">
 					<view class="info">
-						<image class="logo" :src="item.logoUrl" mode=""></image>
-						<text class="name">{{item.companyName}}</text>
-					</view>
-					<view class="time">
-						发布日期：{{item.releaseData}}
+						<u-image width="75rpx" height="75rpx" :src="item.cUrl">
+							<view slot="error" style="font-size: 24rpx;">logo</view>
+						</u-image>
+						<text class="fs30 ml20">{{item.cCompanyName}}</text>
 					</view>
 				</view>
-				<view class="body">
-					<text class="name">{{item.jobName}}</text>
-					<view class="info">
-						<view class="info-item">
+				<view class="flex column pt20">
+					<view class="flex jusb li2">
+						<text class="fs32 fw700">{{item.cpost}}</text>
+						<text class="fs28 red">{{item.price || '4-5K'}}</text>
+					</view>
+					<view class="flex fs28">
+						<view class="">
 							<u-icon color="#959BA7" name="map"></u-icon>
-							<text class="text">{{item.workAddr}}</text>
+							<text class="pl15">{{item.cJobAddress}}</text>
 						</view>
-						<view class="info-item">
+						<view v-if="false" class="pl20">
 							<u-icon color="#959BA7" name="order"></u-icon>
-							<text class="text">{{item.require.workingYears}} · {{item.require.qualifcations}} · {{item.require.workingYears}}</text>
+							<text class="pl15">{{item.require.workingYears}} · {{item.require.qualifcations}} ·
+								{{item.require.workingYears}}</text>
 						</view>
 					</view>
-					<view class="label">
-						<text v-for="(litem, index) in item.label" :key="index" class="label-item">{{litem.labelName}}</text>
+					<view class="flex pt30">
+						<text v-for="(litem, index) in item.label" :key="index" class="" style="background-color: #eee;
+						padding: 10upx 30upx;
+						margin-right: 20upx;">{{litem.labelName}}</text>
 					</view>
 				</view>
 			</view>
@@ -76,6 +88,9 @@
 </template>
 
 <script>
+	import {
+		getRecruitInfoList
+	} from '@/plugin/api'
 	export default {
 		data() {
 			return {
@@ -83,9 +98,7 @@
 				swiperList: [{
 					image: 'http://xixiaruan.com/veterans/images/bg3.jpg'
 				}],
-
 				status: 'nomore',
-
 				value1: 1,
 				value2: 2,
 				value3: {
@@ -159,70 +172,28 @@
 						value: 2
 					}],
 				}],
+				
+				recruitInfoList: [],
 
 				listData: [{
 					logoUrl: '/static/index-selected.png', // logourl
-					companyName: '山西唐元纳智', // 公司名称
+					companyName: '中保（北京）保安服务有限公司太原分公司', // 公司名称
 					releaseData: '2021-03-03', // 发布日期
-					jobName: '实施人员', // 岗位名称
-					workAddr: '晋中市桥东街', // 工作地址
+					jobName: '秩序维护员', // 岗位名称
+					addr: '太原市 万柏林区',
+					workAddr: '太原市万柏林区晋祠路中国铁建花语堂售楼部', // 工作地址
+					price: '4-5K',
 					require: {
 						workingYears: '不限',
-						qualifcations: '大专',
+						qualifcations: '不限',
 						wayOfWorking: '全职'
 					}, // 需要
 					label: [{
-						labelName: '会开车'
+						labelName: '男性'
 					}, {
-						labelName: '会喝酒'
-					}]
-				}, {
-					logoUrl: '/static/index-selected.png', // logourl
-					companyName: '山西唐元纳智', // 公司名称
-					releaseData: '2021-03-03', // 发布日期
-					jobName: '实施人员', // 岗位名称
-					workAddr: '晋中市桥东街', // 工作地址
-					require: {
-						workingYears: '不限',
-						qualifcations: '大专',
-						wayOfWorking: '全职'
-					}, // 需要
-					label: [{
-						labelName: '会开车'
+						labelName: '175cm以上'
 					}, {
-						labelName: '会喝酒'
-					}]
-				}, {
-					logoUrl: '/static/index-selected.png', // logourl
-					companyName: '山西唐元纳智', // 公司名称
-					releaseData: '2021-03-03', // 发布日期
-					jobName: '实施人员', // 岗位名称
-					workAddr: '晋中市桥东街', // 工作地址
-					require: {
-						workingYears: '不限',
-						qualifcations: '大专',
-						wayOfWorking: '全职'
-					}, // 需要
-					label: [{
-						labelName: '会开车'
-					}, {
-						labelName: '会喝酒'
-					}]
-				}, {
-					logoUrl: '/static/index-selected.png', // logourl
-					companyName: '山西唐元纳智', // 公司名称
-					releaseData: '2021-03-03', // 发布日期
-					jobName: '实施人员', // 岗位名称
-					workAddr: '晋中市桥东街', // 工作地址
-					require: {
-						workingYears: '不限',
-						qualifcations: '大专',
-						wayOfWorking: '全职'
-					}, // 需要
-					label: [{
-						labelName: '会开车'
-					}, {
-						labelName: '会喝酒'
+						labelName: '20-35周岁'
 					}]
 				}, {
 					logoUrl: '/static/index-selected.png', // logourl
@@ -243,13 +214,42 @@
 				}]
 			}
 		},
-		onLoad() {
-
-		},
+		onLoad() {},
 		onShow() {
-
+			let that = this;
+			that.init();
 		},
+
 		methods: {
+			//页面初始化
+			init() {
+				this.getRecruitInfoList();
+			},
+
+			// 加载课程
+			getRecruitInfoList() {
+				let that = this;
+				getRecruitInfoList({}).then(({
+					data: {
+						code,
+						data,
+						msg
+					}
+				}) => {
+					if (code === 1) {
+						console.log(data);
+						that.recruitInfoList = data;
+					} else if (msg) {
+						that.$refs.uToast.show({
+							title: msg,
+							position: 'top',
+							type: 'error'
+						})
+					}
+					uni.hideNavigationBarLoading()
+					uni.stopPullDownRefresh()
+				})
+			},
 
 			tagValue1(index) {
 				let that = this;
@@ -270,6 +270,22 @@
 			 */
 			navTo(url, data, type) {
 				console.log('【getJob】【navTo】Url：' + url);
+
+				let that = this;
+				let token = uni.getStorageSync('token')
+				let userInfo = uni.getStorageSync('userInfo')
+				if (!token) {
+					that.content = '请先登录';
+					that.loginShow = true;
+					return;
+				}
+				console.log(!userInfo.bCertification || userInfo.bCertification === "False");
+				if (!userInfo.bCertification || userInfo.bCertification === "False") {
+					that.content = '请先完善个人信息';
+					that.show = true;
+					return;
+				}
+
 				this.route.navTo(url, data, type);
 			}
 		}
@@ -354,43 +370,6 @@
 
 				.time {
 					color: #999;
-				}
-			}
-
-			.body {
-				display: flex;
-				flex-direction: column;
-				padding-top: 30upx;
-
-				line-height: 1.75;
-
-				.name {
-					font-size: 30upx;
-					font-weight: 700;
-				}
-
-				.info {
-					display: flex;
-					font-size: 28upx;
-
-					.info-item {
-						padding-right: 20upx;
-
-						.text {
-							padding-left: 10upx;
-						}
-					}
-				}
-
-				.label {
-					display: flex;
-					padding-top: 30upx;
-
-					.label-item {
-						background-color: #eee;
-						padding: 10upx 30upx;
-						margin-right: 20upx;
-					}
 				}
 			}
 		}

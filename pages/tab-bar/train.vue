@@ -17,7 +17,7 @@
 				<image class="img" :src="item.cSchoolUrl" mode=""></image>
 				<view class="info">
 					<text class="fs30 fw700">{{item.cCourseName}}</text>
-					<text class="fs26 c9">{{item.cDescribe}}</text>
+					<text class="fs26 c9">{{item.cClassName}}</text>
 					<text class="fs26 c9">{{item.cSchoolName || '机构名称'}}</text>
 				</view>
 			</view>

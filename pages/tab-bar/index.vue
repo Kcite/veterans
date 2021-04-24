@@ -8,7 +8,7 @@
 			</view> -->
 		</u-navbar>
 
-		<view class="li-swiper" v-if="swiperList.length">
+		<view class="li-swiper">
 			<u-swiper height="420" :list="swiperList" autoplay indicator-pos="bottomRight" @click="swiperClick">
 			</u-swiper>
 		</view>
@@ -43,7 +43,7 @@
 					<u-icon name="gongjian" color="#ff0000" :size="80" custom-prefix="li-icon"></u-icon>
 					<view class="fw700">拥军共建</view>
 				</u-grid-item>
-				<u-grid-item @click="getCS()">
+				<u-grid-item @click="navTo('')">
 					<u-icon name="gongyi" color="#ff0000" :size="80" custom-prefix="li-icon"></u-icon>
 					<view class="fw700">热心公益</view>
 				</u-grid-item>
@@ -70,7 +70,7 @@
 					@click="navTo('/pages/new/index')"></u-section>
 				<view slot="body">
 					<view class="flex pt10 pb10" v-for="item in newList" :key="item.AutoID"
-						@click="navTo('/pages/new/detail',item.AutoID)">
+						@click="navTo('/pages/new/detail', item.AutoID)">
 						<u-image class="mr20 br10" width="240rpx" style="flex: 0 0 240rpx;" height="150rpx"
 							:src="item.cImgUrl">
 						</u-image>
@@ -86,16 +86,18 @@
 		<view>
 			<u-card margin="20rpx 0rpx" :show-foot="false">
 				<u-section slot="head" title="就业资讯" sub-title="查看更多" font-size="30" line-color="#f00"
-					@click="navTo('/pages/new/index')"></u-section>
+					@click="navTo('/pages/tab-bar/getJob','','tab')"></u-section>
 				<view slot="body">
-					<view class="flex pt10 pb10" v-for="item in newList" :key="item.image"
-						@click="navTo('/pages/new/detail')">
+					<view class="flex pt10 pb10" v-for="item in infoList" :key="item.AutoID"
+						@click="navTo('/pages/home/recruitInfo/detail', item.AutoID)">
 						<u-image class="mr20 br10" width="240rpx" style="flex: 0 0 240rpx;" height="150rpx"
-							:src="item.image">
+							:src="item.cUrl">
 						</u-image>
 						<view class="flex column jusb">
-							<text class="title">{{item.title}}</text>
-							<text class="fs24 c9">{{item.time}} {{item.origin}}</text>
+							<text class="title">{{item.cRecruitTitle}}</text>
+							<text class="fs26">岗位：{{item.cpost}}/{{item.iNumber}}名</text>
+							<text class="fs24 c9">{{item.cCompanyName}}</text>
+							<text class="fs24 c9">{{item.dInDate}}</text>
 						</view>
 					</view>
 				</view>
@@ -109,7 +111,8 @@
 	import {
 		getSwiperList,
 		getNoticeBarList,
-		getNewsListByTop
+		getNewsListByTop,
+		getRecruitInfoListByTop
 	} from '@/plugin/api'
 	export default {
 		data() {
@@ -130,6 +133,8 @@
 			let that = this;
 			console.log('[index][onShow]');
 
+			that.init();
+
 			uni.getLocation({
 				type: 'wgs84',
 				success: function(res) {
@@ -142,10 +147,6 @@
 					}
 					console.log('locaInfo', res.latitude + ',' + res.longitude);
 					uni.setStorageSync('locaInfo', res.latitude + ',' + res.longitude);
-					that.init();
-				},
-				fail() {
-					that.init();
 				}
 			});
 		},
@@ -160,14 +161,15 @@
 		// 分享功能
 		onShareAppMessage: function(options) {
 			console.log('【index】【onShareAppMessage】分享配置(options)：', options);
-		
+
 			let shareList = this.shareList;
 			// 设置菜单中的转发按钮触发转发事件时的转发内容
 			let shareObj = {
 				// 首页分享
 				title: shareList.remark, // 默认是小程序的名称(可以写slogan等)
 				path: shareList.ad_link + '?scene=' + this.userInfo.id, // 默认是当前页面，必须是以‘/’开头的完整路径
-				imageUrl: shareList.ad_code, //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
+				imageUrl: shareList
+					.ad_code, //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
 				success: function(res) {
 					console.log(res);
 					// 转发成功之后的回调
@@ -207,6 +209,7 @@
 				this.getSwiperList(); // 轮播图
 				this.getNoticeBarList(); // 滚动通知
 				this.getNewsListByTop(); // 新闻
+				this.getRecruitInfoListByTop(); // 资讯
 			},
 
 			// 加载首页数据
@@ -302,35 +305,48 @@
 				})
 			},
 
+			//
+			getRecruitInfoListByTop() {
+				let that = this;
+				getRecruitInfoListByTop().then(({
+					data: {
+						code,
+						data,
+						msg
+					}
+				}) => {
+					if (code === 1) {
+						// console.log(data);
+						that.infoList = data;
+						// that.noticeBarList = data.map(item => {
+						// 	item = item.cNotice
+						// 	return item;
+						// })
+					} else if (msg) {
+						that.$refs.uToast.show({
+							title: msg,
+							position: 'top',
+							type: 'error'
+						})
+					}
+					uni.hideNavigationBarLoading()
+					uni.stopPullDownRefresh()
+				})
+			},
+
 			/**
 			 * 跳转
 			 */
 			navTo(url, data, type) {
 				console.log('【index】【navTo】Url：' + url);
-				this.route.navTo(url, data, type);
-				// if (url) {
-				// 	if (data) {
-				// 		uni.navigateTo({
-				// 			url: url + `?data=${JSON.stringify(data)}`
-				// 		})
-				// 	} else {
-				// 		if (type == 'tab') {
-				// 			uni.switchTab({
-				// 				url
-				// 			})
-				// 		} else {
-				// 			// 保留当前页面，跳转到应用内的某个页面。但是不能跳到 tabbar 页面
-				// 			uni.navigateTo({
-				// 				url
-				// 			})
-				// 		}
-				// 	}
-				// } else {
-				// 	this.$refs.uToast.show({
-				// 		title: '暂无内容',
-				// 		type: 'warning'
-				// 	})
-				// }
+				if (url) {
+					this.route.navTo(url, data, type);
+				} else {
+					this.$refs.uToast.show({
+						title: '暂无内容',
+						type: 'warning'
+					})
+				}
 			}
 		}
 	}
